@@ -35,6 +35,7 @@ void uart1_puts(const char *s) {
   while (*s)
     uart1_putchar(*s++);
 }
+
 void uart_init(void) {
   UBRR0H = (uint8_t)(UBRR_VALUE >> 8);
   UBRR0L = (uint8_t)UBRR_VALUE;
