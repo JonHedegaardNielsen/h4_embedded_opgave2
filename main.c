@@ -11,7 +11,9 @@
 
 int main(void) {
   DDRB |= (1 << PB0);
+  // 1 sekund timer
   setupTimer(15624);
+  uart_init();
   uart1_init();
 
   while (1) {
@@ -22,6 +24,7 @@ int main(void) {
     }
     if (c) {
       uart_puts(&c);
+      uart1_putchar(c);
     }
   }
 }

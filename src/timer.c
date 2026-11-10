@@ -1,10 +1,20 @@
-#include <avr/interrupt.h>
-#include <stdint.h>
-#include <avr/io.h>
-#include <util/delay.h>
 #include "../include/ProjectDefines.h"
+#include "../include/uart.h"
+#include <avr/interrupt.h>
+#include <avr/io.h>
+#include <stdint.h>
+#include <util/delay.h>
+#include <stdio.h>
 // koden der kører når tiden løber ud
-ISR(TIMER1_COMPA_vect) { PORTB ^= (1 << PB0); }
+uint32_t count = 0;
+ISR(TIMER1_COMPA_vect) {
+  count++;
+  // PORTB ^= (1 << PB0);
+  char buffer[128];
+  snprintf(buffer, sizeof(buffer), "Sekunder efter opstart: %d\r\n", count);
+  uart_puts(buffer);
+  uart1_puts(buffer);
+}
 
 void setupTimer(uint32_t time) {
   // CTC mode
